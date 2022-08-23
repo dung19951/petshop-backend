@@ -29,7 +29,7 @@ export const login = (data, res) => {
 
 export const register = async (data, res) => {
   const password = await generatePassword(data.password);
-    data.password = password;
+  data.password = password;
   db.query("INSERT INTO users SET ?", data, (err, results) => {
     if (err) {
       console.log(err);
@@ -38,6 +38,39 @@ export const register = async (data, res) => {
       res(null, results);
     }
   });
+};
+
+export const list = (data, res) => {
+  var limit = data.limit ? data.limit : 10;
+  var currentPage = data.page ? data.page : 1;
+  var offset = limit * currentPage - limit;
+  var orderBy = data.sortBy ? data.sortBy : "id";
+  var sort = data.desc ? "desc" : "asc";
+  db.query(
+    "SELECT count(*) as numRows FROM users",
+    function (err, rows, fields) {
+      if (err) {
+        res(err, null);
+      } else {
+        var numRows = rows[0].numRows;
+        var numPages = Math.ceil(numRows / limit);
+        db.query(
+          `SELECT * FROM users ORDER BY ${db.escape(orderBy)} ${db.escape(
+            sort
+          )} LIMIT ${db.escape(parseInt(limit))} OFFSET ${db.escape(
+            parseInt(offset)
+          )} `,
+          function (err, rows, fields) {
+            if (err) {
+              res(err, null);
+            } else {
+              res(null, {data:rows, totalPage:numPages,currentPage:currentPage});
+            }
+          }
+        );
+      }
+    }
+  );
 };
 
 const generatePassword = async (password) => {
