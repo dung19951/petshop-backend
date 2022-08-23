@@ -1,7 +1,6 @@
 import { login, register,list } from "../models/admin.js";
 export const adminLogin = (req, res) => {
-  const data = req.body;
-  login(data, (err, results) => {
+  login(req.body, (err, results) => {
     if (err) {
       res.send(err);
     } else {
@@ -11,8 +10,7 @@ export const adminLogin = (req, res) => {
 };
 
 export const adminRegister = (req, res) => {
-  const data = req.body;
-  register(data, (err, results) => {
+  register(req.body, (err, results) => {
     if (err) {
       res.send(err);
     } else {
@@ -22,8 +20,7 @@ export const adminRegister = (req, res) => {
 };
 
 export const adminList = (req, res) => {
-  const data = req.body;
-  list(data, (err, results) => {
+  list(req.body, (err, results) => {
     if (err) {
       res.send(err);
     } else {
