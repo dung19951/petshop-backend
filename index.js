@@ -4,12 +4,19 @@ import path from "path";
 import bodyParser from "body-parser";
 import cors from "cors";
 import indexRouter from "./app/routes/user.js";
+import session from "express-session";
 
 const app = express();
 
 app.use(express.json());
 
 app.use(bodyParser.json());
+app.set('trust proxy', 1)
+app.use(session({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: true,
+}))
 
 app.use(
   bodyParser.urlencoded({
@@ -20,6 +27,9 @@ app.use(
 app.use(cors());
 
 app.use("/api/user", indexRouter);
+app.use('/', (req, res) => {
+  res.send('abc')
+})
 
 // Handling Errors
 app.use((err, req, res, next) => {
