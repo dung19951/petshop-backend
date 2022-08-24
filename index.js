@@ -7,6 +7,7 @@ import indexRouter from "./app/routes/user.js";
 import adminRouter from "./app/routes/admin.js";
 import mainRouter from "./app/routes/main-page.js";
 import categoryRouter from "./app/routes/categories.js";
+import brandRouter from "./app/routes/brands.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/user", indexRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/main", mainRouter);
 app.use("/api/category", categoryRouter);
+app.use("/api/brand", brandRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {

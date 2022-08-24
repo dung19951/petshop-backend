@@ -15,7 +15,7 @@ export const index = (data, res) => {
   var orderBy = data.sortBy ? data.sortBy : "id";
   var sort = data.desc ? "desc" : "asc";
   db.query(
-    "SELECT count(*) as numRows FROM categories",
+    "SELECT count(*) as numRows FROM brands",
     function (err, rows, fields) {
       if (err) {
         res(err, null);
@@ -23,7 +23,7 @@ export const index = (data, res) => {
         var numRows = rows[0].numRows;
         var numPages = Math.ceil(numRows / limit);
         db.query(
-          `SELECT * FROM categories ORDER BY ${db.escape(orderBy)} ${db.escape(
+          `SELECT * FROM brands ORDER BY ${db.escape(orderBy)} ${db.escape(
             sort
           )} LIMIT ${db.escape(parseInt(limit))} OFFSET ${db.escape(
             parseInt(offset)
@@ -47,7 +47,7 @@ export const index = (data, res) => {
 
 export const show = (data, res) => {
   db.query(
-    "SELECT * FROM categories WHERE id = ?",
+    "SELECT * FROM brands WHERE id = ?",
     data.params.id,
     (err, result) => {
       if (err) {
@@ -61,7 +61,7 @@ export const show = (data, res) => {
 
 export const store = (data, res) => {
   data.slug = slugify(data.title, options);
-  db.query("INSERT INTO categories SET ?", data, (err, results) => {
+  db.query("INSERT INTO brands SET ?", data, (err, results) => {
     if (err) {
       console.log(err);
       res(err, null);
@@ -73,7 +73,7 @@ export const store = (data, res) => {
 
 export const update = (data, res) => {
   db.query(
-    `UPDATE  categories SET ? WHERE id= ?`,
+    `UPDATE  brands SET ? WHERE id= ?`,
     [data.body, data.params.id],
     (err, results) => {
       if (err) {
@@ -87,7 +87,7 @@ export const update = (data, res) => {
 };
 
 export const remove = (data, res) => {
-  db.query(`DELETE FROM categories WHERE  id= ?`, data.params.id, (err, results) => {
+  db.query(`DELETE FROM brands WHERE  id= ?`, data.params.id, (err, results) => {
     if (err) {
       console.log(err);
       res(err, null);
