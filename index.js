@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import indexRouter from "./app/routes/user.js";
 import adminRouter from "./app/routes/admin.js";
+import mainRouter from "./app/routes/main-page.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cors());
 
 app.use("/api/user", indexRouter);
 app.use("/api/admin", adminRouter);
+app.use("/api/main", mainRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {
