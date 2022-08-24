@@ -64,10 +64,44 @@ export const list = (data, res) => {
             if (err) {
               res(err, null);
             } else {
-              res(null, {data:rows, totalPage:numPages,currentPage:currentPage});
+              res(null, {
+                data: rows,
+                totalPage: numPages,
+                currentPage: currentPage,
+              });
             }
           }
         );
+      }
+    }
+  );
+};
+
+export const update = (data, res) => {
+  db.query(
+    `UPDATE  users SET ? WHERE id= ?`,
+    [data.body, data.params.id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, results);
+      }
+    }
+  );
+};
+
+export const deleteUser = (data, res) => {
+  db.query(
+    `DELETE FROM users WHERE  id= ?`,
+    data.params.id,
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, results);
       }
     }
   );
