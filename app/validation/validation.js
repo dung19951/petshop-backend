@@ -9,3 +9,5 @@ var loginValidation = [
 ];
 
 export default loginValidation;
+
+
